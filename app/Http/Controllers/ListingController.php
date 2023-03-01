@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Listing\ListingStoreRequest;
 use App\Models\Listing;
+use App\Models\Price;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
@@ -24,8 +26,11 @@ class ListingController extends Controller
     // show single listing
     public function show(Listing $listing)
     {
+        $prices = Price::where('product_id', $listing->id)->get();
+
         return view('listings.show', [
             'listing' => $listing,
+            'prices' => $prices,
         ]);
     }
 
@@ -46,10 +51,9 @@ class ListingController extends Controller
             ],
             'company' => [
                 'required',
-                'unique:listings,company',
             ],
             'location' => [
-                'required'
+                'required',
             ],
             'website' => [
                 'required',
@@ -58,23 +62,46 @@ class ListingController extends Controller
                 'required',
                 'email',
             ],
+            'amount' => [
+                'required',
+            ],
             'tags' => [
                 'required',
             ],
             'description' => [
                 'required',
-            ]
+            ],
         ]);
 
         if($request->hasFile('logo')){
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
-    $formFields['user_id'] = auth()->id();
+        $count = Listing::where('title', '=', $formFields['title'])->first();
 
-        Listing::create($formFields);
+        if(!$count){
+            $latest_id = Listing::create($formFields)->id;
+            $formFields['user_id'] = auth()->id();
+            $prices = new Price;
+            $prices->amount = $formFields['amount'];
+            $prices->product_id = $latest_id;
+            $prices->user_id = auth()->id();
+            $prices->save();
 
-        return redirect('/')->with('success', 'Listing created successfully!');
+        }else{
+            $id = $count->id;
+            $prices = new Price;
+            $prices->amount = $formFields['amount'];
+            $prices->product_id = $id;
+            $prices->user_id = auth()->id();
+            $prices->save();
+        }
+
+        return redirect('/')->with('success', 'Product created successfully!');
+
+
+
+
     }
 
     // Show Edit Form

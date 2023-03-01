@@ -4,7 +4,7 @@
     <x-card class="p-10">
         <header>
             <h1 class="text-3xl text-center font-bold my-6 uppercase">
-                Manage Gigs
+                Manage product
             </h1>
         </header>
 
@@ -33,7 +33,7 @@
                 @else
                 <tr class="border-gray-300">
                     <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        <p class="text-center">No Listing Found</p>
+                        <p class="text-center">No Product Found</p>
                     </td>
                 </tr>
                 @endunless

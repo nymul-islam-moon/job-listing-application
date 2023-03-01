@@ -4,8 +4,8 @@
 
 <x-card class="p-10 max-w-lg mx-auto mt-24">
     <header class="text-center">
-        <h2 class="text-2xl font-bold uppercase mb-1">Create a Gig </h2>
-        <p class="mb-4">Post a gig to find a developer</p>
+        <h2 class="text-2xl font-bold uppercase mb-1">Create a Post </h2>
+        <p class="mb-4">Post Product</p>
     </header>
 
     <form action="/listings" method="POST" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="title" class="inline-block text-lg mb-2">Job Title</label>
+            <label for="title" class="inline-block text-lg mb-2">Product Code</label>
             <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title" placeholder="Example: Senior Laravel Developer" value="{{ old('title') }}" />
             @error('title')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -27,9 +27,17 @@
         </div>
 
         <div class="mb-6">
-            <label for="location" class="inline-block text-lg mb-2">Job Location</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="location" placeholder="Example: Remote, Boston MA, etc" value="{{ old('location') }}" />
+            <label for="location" class="inline-block text-lg mb-2">Product Categories</label>
+            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="location" placeholder="Example: Laptop, HP, Electronics" value="{{ old('location') }}" />
             @error('location')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-6">
+            <label for="location" class="inline-block text-lg mb-2">Price</label>
+            <input type="number" class="border border-gray-200 rounded p-2 w-full" name="amount" placeholder="Example: 1000" value="{{ old('location') }}" />
+            @error('amount')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
         </div>
@@ -52,23 +60,23 @@
 
         <div class="mb-6">
             <label for="tags" class="inline-block text-lg mb-2">Tags (Comma Separated)</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tags" placeholder="Example: Laravel, Backend, Postgres, etc" value="{{ old('tags') }}" />
+            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="tags" placeholder="Add all tags with comma seperate as CAR, TOYOTA" value="{{ old('tags') }}" />
             @error('tags')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="mb-6">
+        {{-- <div class="mb-6">
             <label for="logo" class="inline-block text-lg mb-2">Company Logo</label>
             <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
             @error('logo')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
-        </div>
+        </div> --}}
 
         <div class="mb-6">
             <label for="description" class="inline-block text-lg mb-2"> Job Description</label>
-            <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10" placeholder="Include tasks, requirements, salary, etc">{{ old('description') }}</textarea>
+            <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10" placeholder="">{{ old('description') }}</textarea>
             @error('description')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
